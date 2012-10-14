@@ -1,0 +1,13 @@
+import javax.swing.JPanel;
+
+
+public class SettingsWindow extends JFrame {
+
+	/**
+	 * Create the panel.
+	 */
+	public SettingsWindow() {
+
+	}
+
+}
