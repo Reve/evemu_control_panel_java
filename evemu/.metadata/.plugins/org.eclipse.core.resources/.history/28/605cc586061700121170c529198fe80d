@@ -1,0 +1,11 @@
+public class Settings{
+		String server;
+		String user;
+		String pass;
+		String port;
+		String dbName;
+		
+		public Settings(){
+			
+		}
+	}

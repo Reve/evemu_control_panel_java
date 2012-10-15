@@ -1,0 +1,32 @@
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import javax.swing.JOptionPane;
+
+public class DBConnect {
+	
+	private Connection con = null;
+	
+	public void TestConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection("jdbc:mysql://"+ Settings.server +
+					":" + Settings.port + "/" + Settings.dbName, Settings.user,
+					Settings.pass);
+			if(!con.isClosed())
+				JOptionPane.showMessageDialog(null, "", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println("Exception: " + e.getMessage());
+		}
+		finally {
+		    try {
+		        if(con != null)
+		          con.close();
+		      } catch(SQLException e) {}
+	    }
+	}
+}

@@ -6,14 +6,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.io.File;
 
 
 public class SettingsWindow extends JFrame {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField user_field;
+	private JTextField server_field;
+	private JTextField pass_field;
+	private JTextField port_field;
+	private JTextField dbname_field;
 
 	/**
 	 * Create the panel.
@@ -22,67 +29,109 @@ public class SettingsWindow extends JFrame {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
-		JLabel lblServer = new JLabel("Server:");
-		lblServer.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblServer.setBounds(6, 25, 87, 16);
-		getContentPane().add(lblServer);
-		
-		textField = new JTextField();
-		textField.setBounds(103, 47, 134, 28);
-		getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblUser = new JLabel("User:");
-		lblUser.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUser.setBounds(6, 53, 85, 16);
-		getContentPane().add(lblUser);
-		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPassword.setBounds(6, 81, 85, 16);
-		getContentPane().add(lblPassword);
-		
-		JLabel lblPort = new JLabel("Port:");
-		lblPort.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPort.setBounds(6, 109, 87, 16);
-		getContentPane().add(lblPort);
-		
-		JLabel lblDbName = new JLabel("DB Name:");
-		lblDbName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDbName.setBounds(6, 137, 87, 16);
-		getContentPane().add(lblDbName);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(103, 19, 134, 28);
-		getContentPane().add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(103, 75, 134, 28);
-		getContentPane().add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(103, 103, 134, 28);
-		getContentPane().add(textField_3);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(103, 131, 134, 28);
-		getContentPane().add(textField_4);
+		JPanel panel = new JPanel();
+		panel.setBounds(6, 6, 238, 253);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(panel);
+		panel.setLayout(null);
 		
 		JButton btnTestConnection = new JButton("Test Connection");
-		btnTestConnection.setBounds(6, 171, 148, 29);
-		getContentPane().add(btnTestConnection);
+		btnTestConnection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Settings.server = server_field.getText();
+				Settings.user = user_field.getText();
+				Settings.pass = pass_field.getText();
+				Settings.port = port_field.getText();
+				Settings.dbName = dbname_field.getText();
+				
+				DBConnect.TestConnection();
+			}
+		});
+		btnTestConnection.setBounds(94, 150, 134, 23);
+		panel.add(btnTestConnection);
 		
 		JButton btnSaveConnection = new JButton("Save Connection");
-		btnSaveConnection.setBounds(6, 198, 148, 29);
-		getContentPane().add(btnSaveConnection);
+		btnSaveConnection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Settings.server = server_field.getText();
+				Settings.user = user_field.getText();
+				Settings.pass = pass_field.getText();
+				Settings.port = port_field.getText();
+				Settings.dbName = dbname_field.getText();
+				
+				XMLParser.WriteSettingsToFile();
+				//save connection
+			}
+		});
+		btnSaveConnection.setBounds(10, 192, 134, 23);
+		panel.add(btnSaveConnection);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(6, 6, 238, 226);
-		getContentPane().add(panel);
+		server_field = new JTextField();
+		server_field.setText("localhost");
+		server_field.setBounds(94, 9, 134, 20);
+		panel.add(server_field);
+		server_field.setColumns(10);
+		
+		JLabel lblServer = new JLabel("Server:");
+		lblServer.setBounds(0, 11, 87, 16);
+		panel.add(lblServer);
+		lblServer.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		user_field = new JTextField();
+		user_field.setText("root");
+		user_field.setBounds(94, 38, 134, 20);
+		panel.add(user_field);
+		user_field.setColumns(10);
+		
+		JLabel lblUser = new JLabel("User:");
+		lblUser.setBounds(0, 38, 85, 16);
+		panel.add(lblUser);
+		lblUser.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(2, 65, 85, 16);
+		panel.add(lblPassword);
+		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		pass_field = new JTextField();
+		pass_field.setBounds(94, 65, 134, 20);
+		panel.add(pass_field);
+		pass_field.setColumns(10);
+		
+		JLabel lblPort = new JLabel("Port:");
+		lblPort.setBounds(0, 92, 87, 16);
+		panel.add(lblPort);
+		lblPort.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		port_field = new JTextField();
+		port_field.setText("3306");
+		port_field.setBounds(94, 92, 134, 20);
+		panel.add(port_field);
+		port_field.setColumns(10);
+		
+		JLabel lblDbName = new JLabel("DB Name:");
+		lblDbName.setBounds(0, 119, 87, 16);
+		panel.add(lblDbName);
+		lblDbName.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		dbname_field = new JTextField();
+		dbname_field.setText("evemu");
+		dbname_field.setBounds(94, 119, 134, 20);
+		panel.add(dbname_field);
+		dbname_field.setColumns(10);
+		
+		JButton btnLoadConnection = new JButton("Load Connection");
+		btnLoadConnection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "\\settings.xml"));
+				server_field.setText(Settings.server);
+				user_field.setText(Settings.user);
+				pass_field.setText(Settings.pass);
+				port_field.setText(Settings.port);
+				dbname_field.setText(Settings.dbName);
+			}
+		});
+		btnLoadConnection.setBounds(10, 219, 134, 23);
+		panel.add(btnLoadConnection);
 	}
 }

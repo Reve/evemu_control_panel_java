@@ -1,0 +1,90 @@
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+
+public class XMLParser {
+	
+	public class Settings{
+		String server;
+		String user;
+		String pass;
+		String port;
+		String dbName;
+		
+		public Settings(){
+			
+		}
+	}
+	
+	public static void WriteSettingsToFile(Settings s) {
+		
+		try {
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			
+			//root elements
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("server_settings");
+			doc.appendChild(rootElement);
+			
+			Element _server = doc.createElement("Server");
+			_server.appendChild(doc.createTextNode(s.server));
+			rootElement.appendChild(_server);
+			
+			Element _user = doc.createElement("User");
+			_user.appendChild(doc.createTextNode(s.user));
+			rootElement.appendChild(_user);
+			
+			Element _pass = doc.createElement("Pass");
+			_pass.appendChild(doc.createTextNode(s.pass));
+			rootElement.appendChild(_pass);
+			
+			Element _port = doc.createElement("Port");
+			_port.appendChild(doc.createTextNode(s.port));
+			rootElement.appendChild(_port);
+			
+			Element _dbName = doc.createElement("DatabaseName");
+			_dbName.appendChild(doc.createTextNode(s.dbName));
+			rootElement.appendChild(_dbName);
+			
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			
+			StreamResult result = new StreamResult(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "\\settings.xml"));
+			
+			//debug print to console
+			//StreamResult result = new StreamResult(System.out);
+			
+			transformer.transform(source, result);
+			
+			System.out.println("File saved!");
+		}
+		catch(ParserConfigurationException pce){
+			pce.printStackTrace();
+		}
+		catch(TransformerException tfe){
+			tfe.printStackTrace();
+		}
+	}
+	
+	public static Settings LoadSettingsFromFile(File file){
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		Document doc = db.parse(file);
+		
+		return null;
+	}
+}

@@ -7,6 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 
 public class MainWindow {
@@ -54,8 +55,9 @@ public class MainWindow {
 		mntmSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SettingsWindow settingsWnd = new SettingsWindow();
-				settingsWnd.setSize(250, 260);
-				settingsWnd.setLocationRelativeTo(null);
+				settingsWnd.setAlwaysOnTop(true);
+				settingsWnd.setSize(254, 291);
+				settingsWnd.setLocationRelativeTo(frame);
 				settingsWnd.setVisible(true);
 			}
 		});
