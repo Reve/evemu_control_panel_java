@@ -1,14 +1,12 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-
 
 public class CreateDB extends JFrame {
 
@@ -23,7 +21,7 @@ public class CreateDB extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JButton btnCreateDb = new JButton("Create DB");
 		btnCreateDb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -32,11 +30,11 @@ public class CreateDB extends JFrame {
 		});
 		btnCreateDb.setBounds(6, 6, 117, 29);
 		contentPane.add(btnCreateDb);
-		
+
 		lblStatus = new JLabel("Status...");
 		lblStatus.setBounds(135, 11, 61, 16);
 		contentPane.add(lblStatus);
-		
+
 		btnDropDb = new JButton("Drop DB");
 		btnDropDb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

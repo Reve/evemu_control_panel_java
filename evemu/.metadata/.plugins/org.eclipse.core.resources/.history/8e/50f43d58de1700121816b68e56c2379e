@@ -1,0 +1,110 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
+
+
+public class Accounts extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTable table;
+
+	@SuppressWarnings("serial")
+	public Accounts() {
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 720, 312);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(6, 6, 136, 266);
+		contentPane.add(panel);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setBounds(15, 12, 48, 14);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(11, 57, 46, 14);
+		
+		textField = new JTextField();
+		textField.setBounds(11, 31, 86, 20);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(11, 77, 86, 20);
+		textField_1.setColumns(10);
+		
+		JButton btnAddAccount = new JButton("Add Account");
+		btnAddAccount.setBounds(11, 200, 93, 23);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(11, 168, 93, 20);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Developer", "GM", "VIP", "User"}));
+		
+		JLabel lblRole = new JLabel("Role");
+		lblRole.setBounds(11, 148, 59, 14);
+		panel.setLayout(null);
+		panel.add(lblUsername);
+		panel.add(lblPassword);
+		panel.add(lblRole);
+		panel.add(comboBox);
+		panel.add(btnAddAccount);
+		panel.add(textField);
+		panel.add(textField_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setBounds(145, 6, 549, 266);
+		contentPane.add(panel_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(10, 32, 185, 20);
+		textField_2.setColumns(10);
+		
+		JLabel lblSearchForAccounts = new JLabel("Search for accounts");
+		lblSearchForAccounts.setBounds(10, 11, 497, 14);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(201, 31, 65, 23);
+		panel_1.setLayout(null);
+		
+		String[] columnNames = {"ID", "Username", "Role", "Location"};
+		Object[][] data = {
+				{"0", "admin", "1243151235", "Lonetrek"},
+				{"1", "reve", "1243151235", "Lonetrek"},
+				{"2", "aknor", "1243151235", "Lonetrek"},
+		};
+		
+		table = new JTable(data, columnNames);
+		table.setSize(new Dimension(500, 100));
+		table.setPreferredScrollableViewportSize(new Dimension(500, 100));
+		table.setFillsViewportHeight(true);
+		
+		panel_1.add(table);
+		panel_1.add(textField_2);
+		panel_1.add(btnSearch);
+		panel_1.add(lblSearchForAccounts);
+	}
+}

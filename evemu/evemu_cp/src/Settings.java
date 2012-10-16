@@ -4,6 +4,6 @@ public class Settings {
 	public static String user = "";
 	public static String pass = "";
 	public static String port = "";
-	public static String dbName = " ";
+	public static String dbName = "";
 	
 }
