@@ -30,10 +30,8 @@ public class DBConnect {
 	
 	private static void CloseConnection() {
 		try {
-	        if(con != null){
+	        if(con != null)
 	          con.close();
-	          System.out.println("Disconnected from database!");
-	        }
 	    } 
 	    catch(SQLException e) {}
 	}
@@ -68,6 +66,7 @@ public class DBConnect {
 			CloseConnection();
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -89,6 +88,7 @@ public class DBConnect {
 			return rs;
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

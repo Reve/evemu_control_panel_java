@@ -23,4 +23,6 @@
 <fullyQualifiedTypeName name="DBConnect"/>
 <fullyQualifiedTypeName name="Settings"/>
 <fullyQualifiedTypeName name="SettingsWindow"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
 </qualifiedTypeNameHistroy>

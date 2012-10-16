@@ -2,18 +2,13 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
 public class DBConnect {
 	
 	private static Connection con = null;
-	private static Statement statement = null;
-	private static ResultSet rs = null;
-	private static int updateQuerry = 0;
 	private static String url = "jdbc:mysql://"+ Settings.server + "/" + Settings.dbName;
 	
 	private static void OpenConnection() {
@@ -24,16 +19,15 @@ public class DBConnect {
 				System.out.println("Connected to database!");
 		} 
 		catch (Exception e) {
+			// TODO Auto-generated catch block
 			System.err.println("Exception: " + e.getMessage());
 		}
 	}
 	
 	private static void CloseConnection() {
 		try {
-	        if(con != null){
+	        if(con != null)
 	          con.close();
-	          System.out.println("Disconnected from database!");
-	        }
 	    } 
 	    catch(SQLException e) {}
 	}
@@ -45,52 +39,12 @@ public class DBConnect {
 				JOptionPane.showMessageDialog(null, "Connected to " + Settings.dbName, "Test Connection ", JOptionPane.INFORMATION_MESSAGE);
 		} 
 		catch (Exception e) {
+			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Exception: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Exception: " + e.getMessage());
 		}
 		finally {
 			CloseConnection();
 	    }
-	}
-	
-	public static void SimpleQuerry(String query) {
-		try {
-			OpenConnection();
-			
-			statement = con.createStatement();
-			updateQuerry = statement.executeUpdate(query);
-			
-			if(updateQuerry != 0){
-				System.out.println("Sql querry executed!");
-			}
-			
-			statement.close();
-			CloseConnection();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static ResultSet AdvancedQuerry(String query) {
-		try {
-			OpenConnection();
-			
-			statement = con.createStatement();
-			updateQuerry = statement.executeUpdate(query);
-			
-			if(updateQuerry != 0){
-				System.out.println("Sql querry executed!");
-			}
-			
-			statement.close();
-			CloseConnection();
-			
-			return rs;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 }

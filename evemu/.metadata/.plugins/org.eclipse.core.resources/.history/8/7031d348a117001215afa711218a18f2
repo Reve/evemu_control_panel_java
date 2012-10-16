@@ -24,16 +24,15 @@ public class DBConnect {
 				System.out.println("Connected to database!");
 		} 
 		catch (Exception e) {
+			// TODO Auto-generated catch block
 			System.err.println("Exception: " + e.getMessage());
 		}
 	}
 	
 	private static void CloseConnection() {
 		try {
-	        if(con != null){
+	        if(con != null)
 	          con.close();
-	          System.out.println("Disconnected from database!");
-	        }
 	    } 
 	    catch(SQLException e) {}
 	}
@@ -45,6 +44,7 @@ public class DBConnect {
 				JOptionPane.showMessageDialog(null, "Connected to " + Settings.dbName, "Test Connection ", JOptionPane.INFORMATION_MESSAGE);
 		} 
 		catch (Exception e) {
+			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Exception: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Exception: " + e.getMessage());
 		}
@@ -53,44 +53,21 @@ public class DBConnect {
 	    }
 	}
 	
-	public static void SimpleQuerry(String query) {
+	public static void SimpleQuerry(String querryString) {
 		try {
-			OpenConnection();
-			
 			statement = con.createStatement();
-			updateQuerry = statement.executeUpdate(query);
+			updateQuerry = statement.executeUpdate(querryString);
 			
 			if(updateQuerry != 0){
 				System.out.println("Sql querry executed!");
 			}
 			
-			statement.close();
-			CloseConnection();
-			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static ResultSet AdvancedQuerry(String query) {
-		try {
-			OpenConnection();
-			
-			statement = con.createStatement();
-			updateQuerry = statement.executeUpdate(query);
-			
-			if(updateQuerry != 0){
-				System.out.println("Sql querry executed!");
-			}
-			
-			statement.close();
-			CloseConnection();
-			
-			return rs;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+	public static void AdvancedQuerry() {
 	}
 }
