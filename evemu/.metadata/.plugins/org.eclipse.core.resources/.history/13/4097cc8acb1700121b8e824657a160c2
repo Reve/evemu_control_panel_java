@@ -1,0 +1,130 @@
+
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.DatabaseMetaData;
+
+public class DBConnect {
+	
+	private static Connection con = null;
+	private static Statement statement = null;
+	private static ResultSet rs = null;
+	private static int updateQuerry = 0;
+	private static String url = "jdbc:mysql://"+ Settings.server + "/" + Settings.dbName;
+	
+	private static void OpenConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "\\settings.xml"));
+			con = DriverManager.getConnection(url, Settings.user, Settings.pass);
+			if(!con.isClosed())
+				System.out.println("Connected to database!");
+		} 
+		catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		}
+	}
+	
+	private static void CloseConnection() {
+		try {
+	        if(con != null){
+	          con.close();
+	          System.out.println("Disconnected from database!");
+	        }
+	    } 
+	    catch(SQLException e) {}
+	}
+	
+	public static void TestConnection() {
+		try {
+			OpenConnection();
+			if(!con.isClosed())
+				JOptionPane.showMessageDialog(null, "Connected to " + Settings.dbName, "Test Connection ", JOptionPane.INFORMATION_MESSAGE);
+		} 
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Exception: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Exceptionasda: " + e.getMessage());
+		}
+		finally {
+			CloseConnection();
+	    }
+	}
+	
+	public static void SimpleQuerry(String query) {
+		try {
+			OpenConnection();
+			
+			statement = con.createStatement();
+			updateQuerry = statement.executeUpdate(query);
+			
+			if(updateQuerry != 0){
+				System.out.println("Sql querry executed!");
+			}
+			
+			statement.close();
+			CloseConnection();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static ResultSet AdvancedQuerry(String query) {
+		try {
+			OpenConnection();
+			
+			statement = con.createStatement();
+			updateQuerry = statement.executeUpdate(query);
+			
+			if(updateQuerry != 0){
+				System.out.println("Sql querry executed!");
+			}
+			
+			statement.close();
+			CloseConnection();
+			
+			return rs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String CreateDB() {
+		try {
+			OpenConnection();
+			
+			DatabaseMetaData meta = (DatabaseMetaData) con.getMetaData();
+			ResultSet res = meta.getTables(null, null, null, new String[] {"TABLE"});
+			
+			while(res.next()) {
+				if(res.getString("TABLE_NAME") == "evemu"){
+					return "EXISTS";
+				}
+				else
+				{
+					statement = con.createStatement();
+					updateQuerry = statement.executeUpdate("CREATE DATABASE evemu;");
+					return "CREATED";
+				}
+			}
+			
+			CloseConnection();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return "SQL_ERROR";
+		}
+		
+		return "ERROR";
+	}
+}

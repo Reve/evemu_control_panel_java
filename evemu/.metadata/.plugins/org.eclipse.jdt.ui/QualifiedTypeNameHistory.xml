@@ -19,10 +19,11 @@
 <fullyQualifiedTypeName name="XMLParser"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-<fullyQualifiedTypeName name="java.sql.SQLException"/>
-<fullyQualifiedTypeName name="DBConnect"/>
 <fullyQualifiedTypeName name="Settings"/>
 <fullyQualifiedTypeName name="SettingsWindow"/>
 <fullyQualifiedTypeName name="java.sql.Statement"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="com.mysql.jdbc.DatabaseMetaData"/>
+<fullyQualifiedTypeName name="DBConnect"/>
 </qualifiedTypeNameHistroy>

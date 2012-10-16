@@ -26,7 +26,6 @@ public class XMLParser {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			
-			//root elements
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("server_settings");
 			doc.appendChild(rootElement);
@@ -55,7 +54,7 @@ public class XMLParser {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			
-			StreamResult result = new StreamResult(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "\\settings.xml"));
+			StreamResult result = new StreamResult(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/" + "settings.xml"));
 			
 			//debug print to console
 			//StreamResult result = new StreamResult(System.out);
@@ -107,14 +106,7 @@ public class XMLParser {
 			
 			System.out.println("Settings loaded!");
 			
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

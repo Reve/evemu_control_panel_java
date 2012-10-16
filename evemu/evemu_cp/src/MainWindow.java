@@ -7,11 +7,23 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.io.File;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.JButton;
 
 
 public class MainWindow {
 
 	private JFrame frame;
+	private JLabel lblStatus;
 
 	/**
 	 * Launch the application.
@@ -22,6 +34,8 @@ public class MainWindow {
 				try {
 					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
+					if(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/" + "settings.xml") != null)
+						XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/" + "settings.xml"));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,8 +55,9 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -55,11 +70,40 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				SettingsWindow settingsWnd = new SettingsWindow();
 				settingsWnd.setAlwaysOnTop(true);
-				settingsWnd.setSize(254, 291);
+				settingsWnd.setSize(254, 259);
 				settingsWnd.setLocationRelativeTo(frame);
 				settingsWnd.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmCreateEvemuDb = new JMenuItem("Create EVEmu DB...");
+		mntmCreateEvemuDb.setEnabled(false);
+		mntmCreateEvemuDb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CreateDB createDBWnd = new CreateDB();
+				createDBWnd.setAlwaysOnTop(true);
+				createDBWnd.setSize(354, 291);
+				createDBWnd.setLocationRelativeTo(frame);
+				createDBWnd.setVisible(true);
+			}
+		});
+		
+		JMenuItem mntmConnect = new JMenuItem("Connect");
+		mntmConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/" + "settings.xml"));
+				if(DBConnect.OpenConnection())
+					lblStatus.setText("Connected!");
+			}
+		});
+		mnFile.add(mntmConnect);
+		
+		JSeparator separator_2 = new JSeparator();
+		mnFile.add(separator_2);
+		mnFile.add(mntmCreateEvemuDb);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnFile.add(separator_1);
 		mnFile.add(mntmSettings);
 		
 		JSeparator separator = new JSeparator();
@@ -68,10 +112,53 @@ public class MainWindow {
 		JMenuItem mntmQuit = new JMenuItem("Quit");
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				DBConnect.CloseConnection();
 				System.exit(0);
 			}
 		});
 		mnFile.add(mntmQuit);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(6, 6, 438, 219);
+		frame.getContentPane().add(panel);
+		
+		JButton btnAccounts = new JButton("Accounts");
+		btnAccounts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Accounts accounts = new Accounts();
+				accounts.setAlwaysOnTop(true);
+				accounts.setSize(650, 300);
+				accounts.setLocationRelativeTo(frame);
+				accounts.setVisible(true);
+			}
+		});
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnAccounts)
+					.addContainerGap(313, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnAccounts)
+					.addContainerGap(182, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel_1.setBounds(6, 227, 438, 23);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblStatus = new JLabel("Disconnected...");
+		lblStatus.setBounds(3, 3, 98, 16);
+		panel_1.add(lblStatus);
 	}
-
 }
