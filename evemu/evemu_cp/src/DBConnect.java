@@ -21,6 +21,7 @@ public class DBConnect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			con = DriverManager.getConnection(url, Settings.user, Settings.pass);
+
 			if (!con.isClosed()) {
 				System.out.println("Connected to database!");
 				connected = true;
@@ -65,12 +66,14 @@ public class DBConnect {
 
 			if (updateQuerry != 0) {
 				System.out.println("Sql querry executed!");
+				JOptionPane.showMessageDialog(null, "Query executed!", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 
 			statement.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -82,6 +85,7 @@ public class DBConnect {
 
 			if (updateQuerry != 0) {
 				System.out.println("Sql querry executed!");
+				JOptionPane.showMessageDialog(null, "Query executed!", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 
 			statement.close();
@@ -90,6 +94,7 @@ public class DBConnect {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}

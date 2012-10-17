@@ -33,9 +33,11 @@ public class MainWindow {
 				try {
 					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
-					if (new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/" + "settings.xml") != null)
-						XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/"
-								+ "settings.xml"));
+					String path = XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+					path = path.substring(0, path.length() - 12);
+
+					if (new File(path + "/" + "settings.xml") != null)
+						XMLParser.LoadSettingsFromFile(new File(path + "/" + "settings.xml"));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -113,8 +115,9 @@ public class MainWindow {
 		JMenuItem mntmConnect = new JMenuItem("Connect");
 		mntmConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				XMLParser.LoadSettingsFromFile(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/"
-						+ "settings.xml"));
+				String path = XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+				path = path.substring(0, path.length() - 12);
+				XMLParser.LoadSettingsFromFile(new File(path + "/" + "settings.xml"));
 				if (DBConnect.OpenConnection())
 					lblStatus.setText("Connected!");
 				btnAccounts.setEnabled(true);

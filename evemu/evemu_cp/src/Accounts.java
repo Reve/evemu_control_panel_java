@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -82,15 +81,11 @@ public class Accounts extends JFrame {
 					DBConnect.SimpleQuerry("INSERT INTO account (accountID, accountName, role, password, online, banned) VALUES(NULL,'"
 							+ username_field.getText() + "' ," + DEV + " ,'" + pass_field.getText() + "' , 0, 0);");
 
-					JOptionPane.showMessageDialog(null, "Dev account added!", "Info", JOptionPane.INFORMATION_MESSAGE);
 				} else if (comboBox.getSelectedIndex() == 1) {
 					// player role selected
 					String query = "INSERT INTO account(accountID, accountName, role, password, online, banned) VALUES(NULL, '"
 							+ username_field.getText() + "', " + PLAYER + ", '" + pass_field.getText() + "', 0, 0);";
-					System.out.println(query);
 					DBConnect.SimpleQuerry(query);
-
-					JOptionPane.showMessageDialog(null, "Player account added!", "Info", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

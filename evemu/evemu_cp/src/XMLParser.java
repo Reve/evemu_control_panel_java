@@ -1,5 +1,6 @@
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,19 +51,21 @@ public class XMLParser {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 
-			StreamResult result = new StreamResult(new File(XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/"
-					+ "settings.xml"));
-
-			// debug print to console
-			// StreamResult result = new StreamResult(System.out);
+			String path = XMLParser.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			path = path.substring(0, path.length() - 12);
+			StreamResult result = new StreamResult(new File(path + "/" + "settings.xml"));
 
 			transformer.transform(source, result);
 
 			System.out.println("File saved!");
+			JOptionPane.showMessageDialog(null, "File saved!", "Info", JOptionPane.INFORMATION_MESSAGE);
+
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " + pce.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " + tfe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -101,8 +104,11 @@ public class XMLParser {
 
 			System.out.println("Settings loaded!");
 
+			JOptionPane.showMessageDialog(null, "Settings loaded!", "Info", JOptionPane.INFORMATION_MESSAGE);
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
